@@ -24,11 +24,11 @@ public class TextUI {
             if (firstRunTime) {
 
                 System.out.println("For help type 'help'. All commands should be given in lowercase");
-
+                firstRunTime = false;
 
             }
 
-            System.out.print("Command: ");
+            System.out.print("> ");
             String input = scanner.nextLine();
 
             // Checks for commands
@@ -39,7 +39,9 @@ public class TextUI {
 
             } else if (input.equals("stop")) {
 
-                System.out.println("Exiting...");
+                System.out.println("");
+                System.out.println("############## - Closing Program - ##############");
+                System.out.println("");
                 break;
 
             } else if (input.equals("files")) {

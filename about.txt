@@ -1,0 +1,2 @@
+Laga min egen text UI
+Den skal ha mange funksjonar
