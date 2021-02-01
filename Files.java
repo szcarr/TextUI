@@ -1,17 +1,17 @@
-import java.nio.file.Paths;
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Files {
 
+    private File file;
     private Scanner scanner;
-    private ArrayList<String> list;
+    private ArrayList<String> document;
     
     public Files(Scanner scanner) {
 
         this.scanner = scanner;
-        this.list = new ArrayList<>();
+        this.document = new ArrayList<>();
 
     }
 
@@ -19,16 +19,13 @@ public class Files {
 
         while (true) {
 
-            System.out.println("");
-            System.out.println("############## - Files class initialized - ##############");
-            System.out.println("");
+            System.out.println("\n ############## - Files class initialized - ############## \n");
             System.out.print("Give file name: ");
-            String file = scanner.nextLine();
+            String pathName = scanner.nextLine();
 
-            System.out.println("");
-            System.out.println("Press the numerical value according to what you want to do.");
-            System.out.println("1. Read file in its entirety ");
-            System.out.println("2. Search for keyword in given file.");
+            file = new File(pathName);
+
+            System.out.println("\nPress the numerical value according to what you want to do.\n 1. Search for keyword in given file.");
 
             int mode;
 
@@ -49,13 +46,12 @@ public class Files {
 
             }
 
+            readFile(file);
+
             if (mode == 1) {
 
-                readFile(file);
-
-            } else if (mode == 2) {
-
                 keyword(file);
+                break;
 
             }
 
@@ -63,17 +59,19 @@ public class Files {
 
     }
 
-    public void readFile(String file) {
+    public void readFile(File file) {
 
-        try (Scanner filescanner = new Scanner(Paths.get(file))) {
+        try (Scanner filescanner = new Scanner(file)) {
 
             while (filescanner.hasNextLine()) {
 
                 String row = filescanner.nextLine();
 
-                this.list.add(row);
+                this.document.add(row);
 
             }
+
+            filescanner.close();
 
         } catch (Exception e) {
 
@@ -81,9 +79,9 @@ public class Files {
 
         } finally {
 
-            for (int i = 0; i < this.list.size(); i++) {
+            for (int i = 0; i < this.document.size(); i++) {
 
-                System.out.println(this.list.get(i));
+                System.out.println(this.document.get(i));
 
             }
 
@@ -91,9 +89,39 @@ public class Files {
        
     }
 
-    public void keyword(String file) {
+    public void keyword(File file) {
 
+        if (file.exists()) {
 
+            System.out.print("Give word to look for in a file: ");
+            String keyword = scanner.nextLine();
+
+            boolean keywordWasFound = false;
+
+            for (int i = 0; i < this.document.size(); i++) {
+
+                if (this.document.get(i).contains(keyword)) {
+
+                    keywordWasFound = true;
+                    System.out.println(keyword + " was found at row: " + i + 1);
+
+                }
+
+            }
+
+            if (!keywordWasFound) {
+
+                System.out.println("There was no matching words of '" + keyword + "'");
+
+            }
+
+            System.out.println(this.document.size());
+
+        } else {
+
+            System.out.println("Failed giving keyword, cause there was no file to read.");
+
+        }
 
     }
 

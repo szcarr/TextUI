@@ -23,7 +23,7 @@ public class TextUI {
 
             if (firstRunTime) {
 
-                System.out.println("For help type 'help'. All commands should be given in lowercase");
+                System.out.println("\nFor help type 'help'. All commands should be given in lowercase.\n");
                 firstRunTime = false;
 
             }
