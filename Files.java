@@ -1,5 +1,6 @@
 import java.io.File;
 import java.util.Scanner;
+
 import java.util.ArrayList;
 
 public class Files {
@@ -7,6 +8,8 @@ public class Files {
     private File file;
     private Scanner scanner;
     private ArrayList<String> document;
+
+    private boolean isFileReadible;
     
     public Files(Scanner scanner) {
 
@@ -17,41 +20,53 @@ public class Files {
 
     public void initialize() {
 
+        this.isFileReadible = true;  //A file is readable unless if its proven to not be readable
+
         while (true) {
 
             System.out.println("\n ############## - Files class initialized - ############## \n");
-            System.out.print("Give file name: ");
+            System.out.print("Give file name(leave empty to close): ");
             String pathName = scanner.nextLine();
 
-            file = new File(pathName);
+            if (pathName.equals("")) {
 
-            System.out.println("\nPress the numerical value according to what you want to do.\n 1. Search for keyword in given file.");
-
-            int mode;
-
-            while (true) {
-
-                System.out.print("> ");
-                mode = Integer.valueOf(scanner.nextLine());
-
-                if (mode == 1 || mode == 2) {
-
-                    break;
-
-                } else {
-
-                    System.out.println("Unknown command. Must give a valid command");
-
-                }
+                break;
 
             }
 
+            file = new File(pathName);
+
             readFile(file);
 
-            if (mode == 1) {
+            if (this.isFileReadible) {
 
-                keyword(file);
-                break;
+                System.out.println("\nPress the numerical value according to what you want to do.\n1. Search for keyword in given file.");
+
+                int mode;
+
+                while (true) {
+
+                    System.out.print("> ");
+                    mode = Integer.valueOf(scanner.nextLine());
+
+                    if (mode == 1 || mode == 2) {
+
+                        break;
+
+                    } else {
+
+                        System.out.println("Unknown command. Must give a valid command");
+
+                    }
+
+                }
+
+                if (mode == 1) {
+
+                    keyword(file);
+                    break;
+
+                }
 
             }
 
@@ -61,7 +76,9 @@ public class Files {
 
     public void readFile(File file) {
 
-        try (Scanner filescanner = new Scanner(file)) {
+        try {
+
+            Scanner filescanner = new Scanner(file);
 
             while (filescanner.hasNextLine()) {
 
@@ -75,7 +92,8 @@ public class Files {
 
         } catch (Exception e) {
 
-            System.out.println("Failed at reading " + e.getMessage());
+            System.out.println("Failed at reading " + e.getMessage());     
+            this.isFileReadible = false; 
 
         } finally {
 
