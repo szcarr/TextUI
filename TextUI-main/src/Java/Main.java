@@ -9,6 +9,8 @@ public class Main {
 
         UI.start();
         
+        // DO ARRAY SPLITTER FOR FILEPATH TO GET CONSTANT PATH REMOVE ABOUT.TXT
+
     }
 
 }

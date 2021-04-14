@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.File;
 
 public class TextUI {
 
@@ -25,6 +26,8 @@ public class TextUI {
     // temp holder input.equals("")
 
     public void start() {
+        Files files = new Files(scanner);
+        DefaultPCStart defaultPC = new DefaultPCStart(files);
 
         boolean firstRunTime = true;
 
@@ -61,13 +64,11 @@ public class TextUI {
 
             } else if (input.equals("files")) {
 
-                Files file = new Files(scanner);
                 this.fromSomeWhereElse = true;
-                file.initialize();
+                files.initialize();
 
             } else if (input.equals("dstart")) {
 
-                DefaultPCStart defaultPC = new DefaultPCStart();
                 this.fromSomeWhereElse = true;
                 defaultPC.start();
             

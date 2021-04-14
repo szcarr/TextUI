@@ -5,11 +5,17 @@ import java.util.ArrayList;
 
 public class Files {
 
+    //Objects/Packages
     private File file;
     private Scanner scanner;
     private ArrayList<String> document;
 
+    //Standard data types
+    //Booleans
     private boolean isFileReadible;
+    
+    //Strings
+    private String filePath;
     
     public Files(Scanner scanner) {
 
@@ -27,6 +33,7 @@ public class Files {
             System.out.println("\n ############## - Files class initialized - ############## \n");
             System.out.print("Give file name(leave empty to close): ");
             String pathName = scanner.nextLine();
+            this.filePath = pathName;
 
             if (pathName.equals("")) {
 
@@ -34,7 +41,7 @@ public class Files {
 
             }
 
-            File fileDecoy = new File(pathName); // Use a decoy to get path of file.
+            File fileDecoy = new File(this.filePath); // Use a decoy to get path of file.
 
             String actualPathName = fileDecoy.getAbsolutePath(); // Can remove this line and just paste fileDecoy.getAbsolutePath(); straight to file class parameter.
 
@@ -46,24 +53,43 @@ public class Files {
 
             if (this.isFileReadible) {
 
-                System.out.println("\nPress the numerical value according to what you want to do.");
-                System.out.println("1. Search for keyword in given file.");
-                System.out.println("2. Prints contents of the given file.\n");
+                printChooseMode();
 
                 int mode;
 
-                while (true) {
+                boolean previousInputFailed = false; //If user gave an error to the program it pormpts the user to give a new input
 
+                while (true) {                   
+
+                    if (previousInputFailed) { //If user gave an error to the program it pormpts the user to give a new input
+
+                        printChooseMode();
+                        
+                    }
+
+                    int[] acceptableArgs = {1, 2, 3}; //Adds list of all acceptable args that can be passed to get to next stage.
                     System.out.print("> ");
-                    mode = Integer.valueOf(scanner.nextLine());
+                    mode = Integer.valueOf(scanner.nextLine());               
 
-                    if (mode == 1 || mode == 2) {
+                    try {
 
-                        break;
+                        if (mode == acceptableArgs[mode - 1]) {
 
-                    } else {
+                            break;
 
-                        System.out.println("Unknown command. Must give a valid command");
+                        } else {
+
+                            System.out.println("Unknown command. Must give a valid command");
+
+                        }
+
+                    } catch (Exception e) {
+
+                        previousInputFailed = true;
+
+                        System.out.println(""); // Linebreaker for clarity
+                        System.out.println(e);
+                        System.out.println(""); // Linebreaker for clarity
 
                     }
 
@@ -71,19 +97,52 @@ public class Files {
 
                 if (mode == 1) {
 
-                    keyword(file);
-                    break;
+                    keyword(file);                   
 
                 } else if (mode == 2) {
 
-                    printFile();
-                    break;
+                    printFile();                 
+
+                } else if (mode == 3) {
+
+                    printMyPath();                
 
                 }
+
+                break;
 
             }
 
         }
+
+    }
+
+    public void printChooseMode() {
+
+        System.out.println("\nPress the numerical value according to what you want to do.");
+        System.out.println("1. Search for keyword in given file.");
+        System.out.println("2. Prints contents of the given file.");
+        System.out.println("3. Prints filepath of given file");
+                
+        System.out.println(""); // Linebreaker for clarity
+
+    }
+
+    public void printMyPath() { //Mostly debugger class
+
+        System.out.println("");
+
+        File fileDecoy = new File(this.filePath); // Use a decoy to get path of file.
+        String actualPathName = fileDecoy.getAbsolutePath(); // Can remove this line and just paste fileDecoy.getAbsolutePath(); straight to file class parameter.
+
+        System.out.println(actualPathName);
+
+    }
+
+    public String stringOfMyPath() {
+
+        File about = new File("about.txt");
+        return about.getAbsolutePath();
 
     }
 
