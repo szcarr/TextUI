@@ -1,1 +1,0 @@
-python3 D:\Documents\Viktig\Programmering\TextUI\\src\data\TextUI.py
