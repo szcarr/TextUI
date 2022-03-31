@@ -1,5 +1,0 @@
-TextUI by szcarr. https://github.com/szcarr/TextUI
-Version: 0.1
-
-[SYSTEM]
-addToBoot = False

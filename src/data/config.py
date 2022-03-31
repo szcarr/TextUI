@@ -18,8 +18,16 @@ def addStartScripts():
     locationAndNameOfWindowsStartScript = projectFolderLocation + fh.detectOS() + "TextUIstart.bat"
     if not fh.checkIfFileExist(locationAndNameOfWindowsStartScript):
         fh.createFileInSpecifiedDir(locationAndNameOfWindowsStartScript)
-        toAdd = str("python3 " + projectFolderLocation + "\\" + mv.sourceFolder + "\\" + mv.nameOfFolderToPrograms + "\\TextUI.py")
-        fh.addTextToSpecifiedFile(locationAndNameOfWindowsStartScript, toAdd)
+
+        toAdd = [
+            #str("@echo off\n"),
+            str("cd /d " + projectFolderLocation + mv.sourceFolder + "\\" + mv.nameOfFolderToPrograms + "\n"),
+            str("python3 TextUI.py\n"),
+            str("pause"),
+        ]
+
+        for i in range(len(toAdd)):
+            fh.addTextToSpecifiedFile(locationAndNameOfWindowsStartScript, toAdd[i])
 
 def addVariablesToUserConfig():
     debug.conditionalPrint(debug.configPrint, "Checking contents of: " + userConfigLocation)
@@ -81,7 +89,8 @@ def setProjectFolderLocation():
             lastIndex = i
 
     if lastIndex == -1:
-        print("Error did not find projectFolderName. In file" + str(os.path.basename(__file__)).split(fh.detectOS())[-1])
+        print(lst)
+        print("Error did not find projectFolderName. In file " + str(os.path.basename(__file__)).split(fh.detectOS())[-1])
         raise ValueError
 
     projectlocation = ""

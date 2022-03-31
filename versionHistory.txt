@@ -1,0 +1,5 @@
+<====================<0.01 | 31.03.2022>====================> 
+* Added basic functionality.
+* Added config (Not added actual functionality yet).
+* Program adds a start script for Windows and Linux.
+* Program dynamically checks if user is operating on Windows or Linux.
