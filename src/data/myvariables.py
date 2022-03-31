@@ -1,0 +1,2 @@
+sourceFolder = "src"
+nameOfFolderToPrograms = "data"
