@@ -1,0 +1,4 @@
+Når ein skal implementere nye userconfigs
+
+STANDBY
+    * LEGGE TIL API SPAM FILTER SANN AT STANDBY IKKJE SPAMMA APIEN OG AT EG IKKJE BLIR BANNA

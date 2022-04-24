@@ -1,0 +1,35 @@
+<====================< V0.03 | TBA >====================>
+CONFIG
+    * User can now toggle login message in settings menu.
+    * By dafault loginMessage is set to True.
+    * System removes "TextUIStart" from boot if addToBoot = False.
+
+PUSH.SH
+    Now prepares project for staging.
+        * Removes all '__pycaches__'.
+        * Removes 'TextUIStart.sh/bat'.
+        * Deletes /src/cfg/.
+
+SMALL FIXES
+    * login.py does not attempt to read /cfg/state/previous_login.txt if it does not exist
+    * login.py does not attempt to read /cfg/user/userconfig.txt if it does not exist
+    
+<====================< V0.02 | 03.04.2022 >====================>
+Added chance game. User can now ask the "magic coin" or "magic 8-ball" for its advice.
+    * User can play coinflip.
+    * User can play magic 8-ball.
+API
+    * Added support for dynamic tracking of cryptocurrencies.
+    * More functionality coming later.
+SYSTEM
+    * User can now add this program to boot.
+    * > settings >> addToBoot = True >> exit.
+    * > update > exit > sudo shutdown -r now for Linux.
+
+Refactored and moved many variables in config.py >> myvariables.py
+
+<====================< V0.01 | 31.03.2022 >====================> 
+Added basic functionality.
+Added config (Not added actual functionality yet).
+Program adds a start script for Windows and Linux.
+Program dynamically checks if user is operating on Windows or Linux.
