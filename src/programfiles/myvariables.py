@@ -14,7 +14,8 @@ previous_login = "previous_login.txt"
 countdown_txt = "countdown.txt"
 
 source_folder = "src"
-name_of_folder_to_programs = "data"
+name_of_folder_to_programs = "programfiles"
+
 config_folder_name = "cfg"
 user_folder_name = "user"
 state_folder_name = "state"

@@ -9,8 +9,8 @@ import fileHandling as fh
 import config
 import debug
 import myvariables as mv
-import timeHandling as th
-import data.csystem.prev_logins as prev
+import time_related.timeHandling as th
+import programfiles.csystem.prev_logins as prev
 
 #print(mv.split_by, mv.project_folder_location)
 statefile = mv.state_folder + mv.previous_login

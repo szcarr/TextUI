@@ -98,16 +98,16 @@ def resetConfigs():
     if mv.currentOS == "Linux":
         to_delete = str(mv.project_folder_location + mv.source_folder + mv.split_by + mv.config_folder_name)
         response = input("System wants to delete '" + to_delete + "'. Y/n?")
-        if response == "" or "Y" or "y":
+        if response == "" or response == "Y" or response == "y":
             os.system("rm -rf " + to_delete)
-            print("System successfully deleted " + to_delete)
+            print(f"System succesfully removed and reinitialized the '{mv.config_folder_name}' folder")
             setup()
     elif mv.currentOS == "Windows":
         to_delete = str(mv.project_folder_location + mv.source_folder + mv.split_by + mv.config_folder_name)
-        print(to_delete)
         response = input("System wants to delete '" + to_delete + "'. Y/n?")
-        if response == "" or "Y" or "y":
+        if response == "" or response == "Y" or response == "y":
             os.system(f"rmdir {to_delete} /s /q")
+            print(f"System succesfully removed and reinitialized the '{mv.config_folder_name}' folder")
             setup()
         #print("Not added deleting for windows check config.py -> resetConfigs()")
 

@@ -1,4 +1,4 @@
-import time.countdown
+import time_related.countdown.countdown as countdown
 
 def main():
     for i in range(50):

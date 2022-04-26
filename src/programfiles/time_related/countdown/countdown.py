@@ -1,5 +1,9 @@
 import time
-import timeHandling as th
+
+import time_related.timeHandling as th
+
+import fileHandling as fh
+import myvariables as mv
 
 countdown_description = '''
 User can create countdowns to keep track of their stuff.
@@ -9,6 +13,8 @@ Remove example: countdown -r 0
 User can list current tracked countdowns and get their index
 List example: countdown -l
 '''
+
+countdown_txt_location = mv.usr_folder + mv.countdown_txt
 
 def countdown(countdown_date, countdown_from) -> str:
 
@@ -36,9 +42,9 @@ def countdown(countdown_date, countdown_from) -> str:
 
     month_counter = start_month + 1
     year_counter = int(ct_from_ymd[0])
+
     if start_year != end_year or start_month != end_month:
-        #print(year_counter, end_year, month_counter, end_month)
-        while year_counter != end_year or month_counter != end_month: # Skal vere good
+        while year_counter != end_year or month_counter != end_month:
             if month_counter % 13 == 0:
                 year_counter += 1
                 month_counter = 1
@@ -101,6 +107,40 @@ Countdown to '{countdown_name}'.
     '''
     return fstring
 
+def add_countdown(name, date):
+    '''
+    Date should be passed in the format "YYYY-MM-DD HH:MM:SS"
+    '''
+    if not fh.checkIfFileExist(countdown_txt_location):
+        fh.createFileInSpecifiedDir(countdown_txt_location)
+    fh.addTextToSpecifiedFile(countdown_txt_location, f"{name} {date}\n")
+
+def read_countdown_txt():
+
+    '''
+    Reads content of countdown.txt
+    '''
+
+    output = fh.readTXTFile(countdown_txt_location)
+
+    r_list = [] # Refined list
+    for e in output:
+        fstring = e.split("\n")[0]
+        r_list.append(fstring)
+    return r_list
+
+def print_countdown_txt():
+    lst = read_countdown_txt()
+    for i, e in enumerate(lst):
+        print(f"{i} : {e}")
+
+def remove_countdown(i):
+    '''
+    i -> int
+    '''
+    fh.replaceLineInFile(countdown_txt_location, i, "WAGABOAGA")
+
+
 FERIE = "2022-06-16 14:15:00"
 
 RAGNBRUSDAG = "2023-01-30 00:00:00"
@@ -113,7 +153,6 @@ DARKSECRET = "2022-04-23 23:00:00"
 
 dateandtime = f"{th.getDateToday()} {th.get_local_time()}"
 
-while True:
-    dateandtime = f"{th.getDateToday()} {th.get_local_time()}"
-    print(toString("Sommar ferie", countdown(FERIE, dateandtime)))
-    time.sleep(1)
+dateandtime = f"{th.getDateToday()} {th.get_local_time()}"
+print(toString("Sommar ferie", countdown(FERIE, dateandtime)))
+time.sleep(1)

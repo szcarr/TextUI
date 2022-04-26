@@ -1,6 +1,6 @@
 import traceback
 
-import TextUI.src.data.time.countdown.countdown as countdown
+import time_related.countdown.countdown as countdown
 import config
 import debug
 import fileHandling as fh
@@ -25,7 +25,7 @@ User can also reference a variable by its name to get a description of what the 
 modeHelpList = {
     "exit": "Exit | Exits current program | Syntax: exit",
     "help": "Help | Prints all legal commands | -v verbose | Syntax: help",
-    "countdown": "countdown | User has to specify one flag and one flag only | -v verbose -a add -r remove -l list | Syntax: countdown -a <name_of_countdown> <YYYY-MM-DD HH:MM:SS",
+    "countdown": "countdown | User has to specify one flag and one flag only | -v verbose -a add -r remove -l list | Syntax: countdown -a <name_of_countdown> <YYYY-MM-DD HH:MM:SS>",
     "lsvar": "List variables | Lists all variables user can access | Syntax: lsvar", 
     "rconf": "Reset configs | Resets all configs | Syntax: rconf",
     "settings": "Settings | Enters settings | Syntax: settings",
@@ -62,9 +62,11 @@ def menu(): # Main function
 def checkModes(mode):
     try:
         modeList = mode.split(" ")
+        print(modeList)
         if modeList[0] == "exit":
             addChanges()
             exit()
+
         elif modeList[0] == "help":
             if len(modeList) == 1:
                 printModes()
@@ -73,15 +75,24 @@ def checkModes(mode):
                     for key in helpFlags:
                         if modeList[i] == key:
                             print(helpFlags.get(key))
+
         elif modeList[0] == "countdown":
             if modeList[1] == "-v" and len(modeList) == 2:
-                print(countdown_description)
+                print(countdown.countdown_description)
             elif modeList[1] == "-l" and len(modeList) == 2:
-                pass
+                countdown.print_countdown_txt()
+            elif modeList[1] == "-a" and len(modeList) == 5:
+                name_of_countdown = modeList[2]
+                countdown_date = f"{modeList[3]} {modeList[4]}"
+                countdown.add_countdown(name_of_countdown, countdown_date)
+            elif modeList[1] == "-r" and len(modeList) == 3:
+                countdown.remove_countdown(int(modeList[2]))
+
         elif modeList[0] == "rconf":
             config.resetConfigs()
             setup()
             debug.conditionalPrint(debug.systemPrint, f"System successfully deleted {mv.config_folder_name} folder.")
+
         elif modeList[0] == "lsvar":
             for k in userconfigvariables:
                 toPrint = str(k + " = " + str(userconfigvariables.get(k)) + ";")
