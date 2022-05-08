@@ -1,3 +1,0 @@
-User 'itwan' logged in: Tuesday 2022-04-25 00:06:23 W. Europe Daylight Time.
-TextUI version: V0.03. Build date: TBA.
-Operating system: Windows

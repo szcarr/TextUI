@@ -11,6 +11,7 @@ import debug
 import myvariables as mv
 import time_related.timeHandling as th
 import programfiles.csystem.prev_logins as prev
+import stringFormatting as sf
 
 #print(mv.split_by, mv.project_folder_location)
 statefile = mv.state_folder + mv.previous_login
@@ -34,8 +35,9 @@ def print_login_message():
         user = prev.get_prev_user(output)
         date = prev.get_prev_login_date(output)
 
+        title = sf.title("LOGINMESSAGE")
         msg = [
-            f"<=========================|LOGIN MESSAGE|=========================>",
+            title,
             f"User who last logged in: {user}",
             f"Last login date: {date}",
         ]

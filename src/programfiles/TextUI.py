@@ -9,7 +9,8 @@ import misc.chancegame as chance
 import csystem.update as update
 import myvariables as mv
 import standby
-import csystem.login as login
+import csystem.login as login 
+import stringFormatting as sf
 #This file is main
 
 debug.conditionalPrint(debug.verbose, debug.settingVariables + " in " + str(os.path.basename(__file__)).split(fh.detectOS())[-1]) # <- get filename of current file
@@ -82,7 +83,8 @@ def exit():
 def print_modes():
     keysForModeList = list(modeHelpList.keys())
     counter = 0
-    print("\n<=========================|TEXTUI|=========================>")
+    title = sf.title("TEXTUI")
+    print(f"\n{title}")
     for key in keysForModeList:
         counter += 1
         print(str(counter) + ": " + str(modeHelpList.get(key)))

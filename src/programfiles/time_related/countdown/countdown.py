@@ -24,7 +24,7 @@ def countdown(countdown_date, countdown_from) -> str:
 
     Passed in the form 'YYYY-MM-DD HH:MM:SS' as a string.\n
 
-    Returns
+    Returns time left till date
     '''
 
     ct_date = countdown_date.split(" ")
@@ -35,6 +35,15 @@ def countdown(countdown_date, countdown_from) -> str:
     ct_from_ymd = th.getYearMonthDay(ct_from[0])
     ct_from_hms = th.getHoursMinutesSeconds(ct_from[1])
 
+    date_lst = [ct_date_ymd, ct_date_hms]
+    from_lst = [ct_from_ymd, ct_from_hms]
+
+    output = check_if_time_is_in_the_past(date_lst, from_lst)
+    if output:
+        #print("Time is in the past")
+        return f"-1"
+
+    #print("Time was not in the past")
     days_remaining = 0
     
     start_month, end_month = int(ct_from_ymd[1]), int(ct_date_ymd[1])
@@ -50,7 +59,10 @@ def countdown(countdown_date, countdown_from) -> str:
                 month_counter = 1
             if year_counter == end_year and month_counter == end_month:
                 break
-            #print(year_counter, end_year, month_counter, end_month)
+            if year_counter > 10000: 
+                # User has either gave an illegal input or time is in the past:
+                return "-1"
+           # print(year_counter, month_counter, end_year,  end_month)
             days_remaining += th.monthrange(year_counter, month_counter)[1]
             #print(year_counter, month_counter, days_remaining)
             month_counter += 1
@@ -101,7 +113,7 @@ def toString(countdown_name, time):
     timelist = lst[1].split(":")
     days = lst[0]
     fstring = f'''
-Countdown to '{countdown_name}'.
+ -- Countdown to '{countdown_name}'.
     {days:>3} {timelist[0]:>4} {timelist[1]:>6} {timelist[2]:>7}
     {"Days":>4} {"Hours":>5} {"Minutes":>5} {"Seconds":>5}
     '''
@@ -111,9 +123,18 @@ def add_countdown(name, date):
     '''
     Date should be passed in the format "YYYY-MM-DD HH:MM:SS"
     '''
-    if not fh.checkIfFileExist(countdown_txt_location):
+    if not fh.checkIfFileExist(countdown_txt_location): # If file does not exist then create file
         fh.createFileInSpecifiedDir(countdown_txt_location)
-    fh.addTextToSpecifiedFile(countdown_txt_location, f"{name} {date}\n")
+
+    output = read_countdown_txt()
+    for index, element in enumerate(output):
+        if element == "\n" or element == "": #If empty slot then add contents here
+            fh.replaceLineInFile(countdown_txt_location, index, f"{name} {date}")
+            break
+    
+    new_version = read_countdown_txt()
+    if output == new_version: # Compares if countdown txt is different if different it has already updated the txt file
+        fh.addTextToSpecifiedFile(countdown_txt_location, f"{name} {date}\n")
 
 def read_countdown_txt():
 
@@ -136,23 +157,49 @@ def print_countdown_txt():
 
 def remove_countdown(i):
     '''
-    i -> int
+    i (index) -> int
     '''
-    fh.replaceLineInFile(countdown_txt_location, i, "WAGABOAGA")
+    fh.replaceLineInFile(countdown_txt_location, i, "")
 
+def initialize_countdowns():
+    output = read_countdown_txt()
+    r_list = []
+    for e in output:
+        if e == "\n":
+            continue
+        fstring = e.split("\n")[0]
+        r_list.append(fstring)
 
-FERIE = "2022-06-16 14:15:00"
+    countdown_list = []
+    for s in r_list:
+        name = s.split('"')[1]
+        datelist = s.split(" ")
+        date, time = datelist[len(datelist) - 2], datelist[len(datelist) - 1]
+        countdown_date = f"{date} {time}"
+        dateandtime = f"{th.getDateToday()} {th.get_local_time()}"
+        funny = toString(name, countdown(countdown_date, dateandtime))
+        countdown_list.append(funny)
 
-RAGNBRUSDAG = "2023-01-30 00:00:00"
-IMORGON = "2022-04-24 14:15:30"
+    return countdown_list
 
-YEAR = "2025-04-22 14:15:30"
-TESTTIME = "2022-04-25 19:56:30"
+def check_if_time_is_in_the_past(date_lst, from_lst):
 
-DARKSECRET = "2022-04-23 23:00:00"
+    '''
+    Inputs are: date = [[year, month, day], [hour, minutes, seconds]]\n
+    Returns true if time is in the past\n
+    Else returns false\n
+    '''
 
-dateandtime = f"{th.getDateToday()} {th.get_local_time()}"
-
-dateandtime = f"{th.getDateToday()} {th.get_local_time()}"
-print(toString("Sommar ferie", countdown(FERIE, dateandtime)))
-time.sleep(1)
+    if date_lst[0][0] < from_lst[0][0]:
+        return True
+    if date_lst[0][0] <= from_lst[0][0] and date_lst[0][1] < from_lst[0][1]:
+        return True
+    if date_lst[0][0] <= from_lst[0][0] and date_lst[0][1] <= from_lst[0][1] and date_lst[0][2] < from_lst[0][2]:
+        return True
+    if date_lst[0][0] <= from_lst[0][0] and date_lst[0][1] <= from_lst[0][1] and date_lst[0][2] <= from_lst[0][2] and date_lst[1][0] < from_lst[1][0]:
+        return True
+    if date_lst[0][0] <= from_lst[0][0] and date_lst[0][1] <= from_lst[0][1] and date_lst[0][2] <= from_lst[0][2] and date_lst[1][0] <= from_lst[1][0] and date_lst[1][1] < from_lst[1][1]:
+        return True
+    if date_lst[0][0] <= from_lst[0][0] and date_lst[0][1] <= from_lst[0][1] and date_lst[0][2] <= from_lst[0][2] and date_lst[1][0] <= from_lst[1][0] and date_lst[1][1] < from_lst[1][1] and date_lst[1][2] < from_lst[1][2]:
+        return True
+    return False

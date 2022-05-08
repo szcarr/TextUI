@@ -5,7 +5,7 @@ import config
 import debug
 import fileHandling as fh
 import myvariables as mv
-
+import stringFormatting as sf
 exitProgram = False
 firstRun = True
 
@@ -62,7 +62,7 @@ def menu(): # Main function
 def checkModes(mode):
     try:
         modeList = mode.split(" ")
-        print(modeList)
+        #print(modeList)
         if modeList[0] == "exit":
             addChanges()
             exit()
@@ -121,7 +121,8 @@ def exit():
 def printModes():
     keysForModeList = list(modeHelpList.keys())
     counter = 0
-    print("\n<=========================|SETTINGS|=========================>")
+    title = sf.title("SETTINGS")
+    print(f"\n{title}")
     for key in keysForModeList:
         counter += 1
         print(str(counter) + ": " + str(modeHelpList.get(key)))
