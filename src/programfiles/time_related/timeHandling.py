@@ -8,6 +8,9 @@ A simple file to handle dates and time.
 '''
 
 def get_local_time():
+    '''
+    Retruns a string in format: HH:MM:SS
+    '''
     clock = datetime.now().strftime("%H:%M:%S")
     return clock
     

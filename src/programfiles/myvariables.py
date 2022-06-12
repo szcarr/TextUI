@@ -11,7 +11,8 @@ project_folder_name = "TextUI" #Name must be indentical to project folder name
 
 name_of_userconfig = "userconfig.txt"
 previous_login = "previous_login.txt"
-countdown_txt = "countdown.txt"
+countdown_txt = "countdowns.txt"
+standby_states_txt = "standby_states.txt"
 
 source_folder = "src"
 name_of_folder_to_programs = "programfiles"

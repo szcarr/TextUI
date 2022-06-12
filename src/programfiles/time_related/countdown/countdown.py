@@ -123,9 +123,7 @@ def add_countdown(name, date):
     '''
     Date should be passed in the format "YYYY-MM-DD HH:MM:SS"
     '''
-    if not fh.checkIfFileExist(countdown_txt_location): # If file does not exist then create file
-        fh.createFileInSpecifiedDir(countdown_txt_location)
-
+    
     output = read_countdown_txt()
     for index, element in enumerate(output):
         if element == "\n" or element == "": #If empty slot then add contents here
@@ -165,7 +163,7 @@ def initialize_countdowns():
     output = read_countdown_txt()
     r_list = []
     for e in output:
-        if e == "\n":
+        if e == "\n" or e == "":
             continue
         fstring = e.split("\n")[0]
         r_list.append(fstring)

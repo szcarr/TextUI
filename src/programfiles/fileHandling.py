@@ -206,10 +206,10 @@ def replaceLineInFile(filePathAndName, lineNumber, lineToAdd):
     document = readTXTFile(filePathAndName)
     lineToAdd = lineToAdd + "\n"
 
-    print(document)
+    #print(document)
     document[lineNumber] = lineToAdd
     
-    print(document)
+    #print(document)
     removeFile(filePathAndName)
     createFileInSpecifiedDir(filePathAndName)
     for i in range(len(document)):

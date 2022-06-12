@@ -36,15 +36,19 @@ login.main()
 def menu():
     global first_run
     while True:
-        if exit_program:
-            break
-        elif first_run:
-            print_modes()
-            first_run = False
-        print("> ", end="")
-        mode = input() 
-        check_modes(mode)
-
+        try:
+            if exit_program:
+                break
+            elif first_run:
+                print_modes()
+                first_run = False
+            print("> ", end="")
+            mode = input() 
+            check_modes(mode)
+        except KeyboardInterrupt:
+            print(f"^C", end="")
+            print(f"\n", end="")
+            
 def check_modes(mode):
     try:
         mode = mode.split(" ")

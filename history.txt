@@ -1,16 +1,23 @@
-<====================< V0.03 | TBA >====================>
+<====================< V0.04 | TBA >====================>
+
+
+<====================< V0.03 | 04.05.2022 >====================>
+
 CONFIG
     * User can now toggle login message in settings menu.
     * By dafault loginMessage is set to True.
     * System removes "TextUIStart" from boot if addToBoot = False.
+
 PUSH.SH
     Now prepares project for staging.
         * Removes all '__pycaches__'.
         * Removes 'TextUIStart.sh/bat'.
         * Deletes /src/cfg/ (Because this is the users personal/private folder).
+        
 SMALL FIXES
     * login.py does not attempt to read /cfg/state/previous_login.txt if it does not exist.
     * login.py does not attempt to read /cfg/user/userconfig.txt if it does not exist.
+
 COUNTDOWN
     * User can add countdowns to countdown.txt and also in settings menu.
     * The countdown countdowns from time right now till date the user gave.
@@ -20,12 +27,15 @@ COUNTDOWN
 Added a default title type to stringFormatting.py -> title()
 
 <====================< V0.02 | 03.04.2022 >====================>
+
 Added chance game. User can now ask the "magic coin" or "magic 8-ball" for its advice.
     * User can play coinflip.
     * User can play magic 8-ball.
+
 API
     * Added support for dynamic tracking of cryptocurrencies.
     * More functionality coming later.
+
 SYSTEM
     * User can now add this program to boot.
     * > settings >> addToBoot = True >> exit.

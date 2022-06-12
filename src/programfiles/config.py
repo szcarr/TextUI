@@ -14,12 +14,13 @@ def addStartScripts():
         if not fh.checkIfFileExist(locationAndNameOfWindowsStartScript):
             fh.createFileInSpecifiedDir(locationAndNameOfWindowsStartScript)
 
+            location_of_main_file = str(os.popen("where /r . TextUI.py").read()).split("\n")[0]
             toAdd = [
                 #str("@echo off\n"),
-                str("cd /d " + mv.project_folder_location + mv.source_folder + "\\" + mv.name_of_folder_to_programs + "\n"),
-                str("set PYTHONPATH=%PYTHONPATH%;" + mv.project_folder_location + mv.source_folder + "\\" + mv.name_of_folder_to_programs),
-                str("python3 TextUI.py\n"),
-                str("pause"),
+                str(f"cd /d {mv.project_folder_location}{mv.source_folder}\\{mv.name_of_folder_to_programs}\n"),
+                str(f"set PYTHONPATH=%PYTHONPATH%; {mv.project_folder_location}{mv.source_folder}\\{mv.name_of_folder_to_programs}\n"),
+                str(f"python.exe {location_of_main_file}\n"),
+                str(f"pause"),
             ]
 
             for i in range(len(toAdd)):
@@ -63,14 +64,18 @@ def addVariablesToUserConfig():
     if fh.checkIfFileExist(mv.userconfig_location) and fileSize < 1:
         debug.conditionalPrint(debug.configPrint, "Adding values to: " + mv.userconfig_location)
         toAdd = [
-            "TextUI by szcarr. https://github.com/szcarr/TextUI",
-            "Version: " + mv.version_number,
-            "",
-            "[MISC]",
-            "loginMessage = True; // When user first enters TextUI, user is prompted with a login message.",
-            "",
-            "[SYSTEM]",
-            "addToBoot = False; // Adds file to startup, meaning this program will start when computer boots.",
+            f"TextUI by szcarr. https://github.com/szcarr/TextUI",
+            f"Version: {mv.version_number}",
+            f"",
+            f"[MISC]",
+            f"loginMessage = True; // When user first enters TextUI, user is prompted with a login message.",
+            f"",
+            f"[STANDBY]",
+            f"countdownPrintDelay = 00:15:00; // Value given is delay between each time program iterates and prints all countdowns.",
+            f"",
+            f"[SYSTEM]",
+            f"addToBoot = False; // Adds file to startup, meaning this program will start when computer boots.",
+            f"",
         ]
 
         for i in range(len(toAdd)):
@@ -120,6 +125,17 @@ def add_countdown_file():
         file = mv.usr_folder + mv.countdown_txt
         fh.createFileInSpecifiedDir(file)
 
+def setup_standby():
+    countdown_txt_location = mv.usr_folder + mv.countdown_txt
+    countdown_state_txt_location = mv.state_folder + mv.standby_states_txt
+    countdownfiles = [
+        countdown_state_txt_location,
+        countdown_txt_location,
+    ]
+    for e in countdownfiles:
+        if not fh.checkIfFileExist(e): # If file does not exist then create file
+            fh.createFileInSpecifiedDir(e)
+
 def setup():
     debug.conditionalPrint(debug.systemPrint, "Operating system: " + str(mv.currentOS))
     debug.conditionalPrint(debug.systemPrint, debug.settingVariables + " in file: " + str(os.path.basename(__file__)).split(fh.detectOS())[-1])
@@ -127,3 +143,4 @@ def setup():
     addVariablesToUserConfig()
     addStartScripts()
     state()
+    setup_standby()

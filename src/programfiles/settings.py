@@ -25,7 +25,7 @@ User can also reference a variable by its name to get a description of what the 
 modeHelpList = {
     "exit": "Exit | Exits current program | Syntax: exit",
     "help": "Help | Prints all legal commands | -v verbose | Syntax: help",
-    "countdown": "countdown | User has to specify one flag and one flag only | -v verbose -a add -r remove -l list | Syntax: countdown -a <name_of_countdown> <YYYY-MM-DD HH:MM:SS>",
+    "countdown": "countdown | User has to specify one flag and one flag only | -v verbose -a add -r remove -l list | Syntax: countdown -a '<name_of_countdown>' <YYYY-MM-DD HH:MM:SS>",
     "lsvar": "List variables | Lists all variables user can access | Syntax: lsvar", 
     "rconf": "Reset configs | Resets all configs | Syntax: rconf",
     "settings": "Settings | Enters settings | Syntax: settings",
@@ -33,6 +33,8 @@ modeHelpList = {
 
 userconfigvariables = {} #Values are dynamically added
 userconfigdescription = {} #Values are dynamically added
+
+user_has_changed_variables = False
 
 def addChanges():
     index = -1
@@ -50,14 +52,18 @@ def menu(): # Main function
     global firstRun, exitProgram
     exitProgram = False
     while True:
-        if exitProgram:
-            break
-        elif firstRun:
-            printModes()
-            firstRun = False
-        print(">> ", end="")
-        mode = input() 
-        checkModes(mode)
+        try:
+            if exitProgram:
+                break
+            elif firstRun:
+                printModes()
+                firstRun = False
+            print(">> ", end="")
+            mode = input() 
+            checkModes(mode)
+        except KeyboardInterrupt:
+            print(f"^C", end="")
+            print(f"\n", end="")
 
 def checkModes(mode):
     try:
@@ -81,9 +87,12 @@ def checkModes(mode):
                 print(countdown.countdown_description)
             elif modeList[1] == "-l" and len(modeList) == 2:
                 countdown.print_countdown_txt()
-            elif modeList[1] == "-a" and len(modeList) == 5:
-                name_of_countdown = modeList[2]
-                countdown_date = f"{modeList[3]} {modeList[4]}"
+            elif modeList[1] == "-a" and len(modeList) >= 5:
+
+                ct_name = mode.split('"')[1]
+                name_of_countdown = f'"{ct_name}"'
+
+                countdown_date = f"{modeList[len(modeList) - 2]} {modeList[len(modeList) - 1]}"
                 countdown.add_countdown(name_of_countdown, countdown_date)
             elif modeList[1] == "-r" and len(modeList) == 3:
                 countdown.remove_countdown(int(modeList[2]))
@@ -104,6 +113,8 @@ def checkModes(mode):
             if len(modeList) > 1: # User is assigning values to variables
                 for k in userconfigvariables:
                     if modeList[0] == k:
+                        global user_has_changed_variables
+                        user_has_changed_variables = True
                         print(k + " is now set to: " + modeList[2])
                         userconfigvariables[k] = modeList[2]
             else: # User wants a description of variable
@@ -116,7 +127,10 @@ def checkModes(mode):
 def exit():
     global exitProgram
     exitProgram = True
-    print("Exiting...")
+    if user_has_changed_variables:
+        print(f"Exiting settings and applying changes.")
+    else:
+        print(f"Exiting settings.")
 
 def printModes():
     keysForModeList = list(modeHelpList.keys())
