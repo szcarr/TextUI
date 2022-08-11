@@ -5,8 +5,7 @@ import sys
 sys.path.insert(1, os.path.join(sys.path[0], '..')) # <- Adds parent folders modules to PATH
 
 import fileHandling as fh
-import config
-import debug
+
 import myvariables as mv
 from . import addToBoot
 
@@ -26,7 +25,7 @@ def update():
             select_mode(current_branch_selected, current_variable_selected)
     print(f"System successfully updated.")
 
-def read_userconfigs():
+def read_userconfigs(): # Reads userconfig.txt and removes breakline char
     lst_output = fh.readTXTFile(mv.userconfig_location)
     filtered_output = []
     for e in lst_output:

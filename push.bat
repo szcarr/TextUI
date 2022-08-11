@@ -1,3 +1,4 @@
+REM For staging. Removes personal files and data.
 set file="tmp.txt"
 del /q %file%
 dir /Ad /s /b *__pycache__ > %file%

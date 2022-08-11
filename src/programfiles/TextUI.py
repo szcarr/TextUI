@@ -2,7 +2,7 @@ import os
 import traceback
 
 import settings
-import config
+import setup
 import debug
 import fileHandling as fh
 import misc.chancegame as chance
@@ -29,7 +29,7 @@ modeHelpList = {
 }
 
 mv.setup()
-config.setup()
+setup.setup()
 
 login.main()
 

@@ -109,15 +109,18 @@ def toString(countdown_name, time):
     '''
     https://zetcode.com/python/fstring/
     '''
-    lst = str(time).split(" ")
-    timelist = lst[1].split(":")
-    days = lst[0]
-    fstring = f'''
- -- Countdown to '{countdown_name}'.
-    {days:>3} {timelist[0]:>4} {timelist[1]:>6} {timelist[2]:>7}
-    {"Days":>4} {"Hours":>5} {"Minutes":>5} {"Seconds":>5}
-    '''
-    return fstring
+    try:
+        lst = str(time).split(" ")
+        timelist = lst[1].split(":")
+        days = lst[0]
+        fstring = f'''
+    -- Countdown to '{countdown_name}'.
+        {days:>3} {timelist[0]:>4} {timelist[1]:>6} {timelist[2]:>7}
+        {"Days":>4} {"Hours":>5} {"Minutes":>5} {"Seconds":>5}
+        '''
+        return fstring
+    except:
+        return f"{countdown_name}\nValue is in the past!"
 
 def add_countdown(name, date):
     '''

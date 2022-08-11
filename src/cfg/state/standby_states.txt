@@ -1,1 +1,3 @@
-countdown_next_print = 2022-6-13 2:18:3
+countdown_nextprint = 2022-8-11 20:27:38
+cryptoTrending_nextprint = 2022-8-11 19:27:38
+cryptoWatchlist_nextprint = 2022-8-11 18:42:39

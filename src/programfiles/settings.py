@@ -1,7 +1,7 @@
 import traceback
 
 import time_related.countdown.countdown as countdown
-import config
+import setup
 import debug
 import fileHandling as fh
 import myvariables as mv
@@ -48,7 +48,7 @@ def addChanges():
         fh.replaceLineInFile(mv.userconfig_location, index, toAdd)
 
 def menu(): # Main function
-    setup()
+    settings_setup()
     global firstRun, exitProgram
     exitProgram = False
     while True:
@@ -98,8 +98,8 @@ def checkModes(mode):
                 countdown.remove_countdown(int(modeList[2]))
 
         elif modeList[0] == "rconf":
-            config.resetConfigs()
-            setup()
+            setup.resetConfigs()
+            settings_setup()
             debug.conditionalPrint(debug.systemPrint, f"System successfully deleted {mv.config_folder_name} folder.")
 
         elif modeList[0] == "lsvar":
@@ -142,7 +142,7 @@ def printModes():
         print(str(counter) + ": " + str(modeHelpList.get(key)))
     print("")
 
-def setup():
+def settings_setup():
     setup_userconfig()
     setupUserConfigDecription()
 

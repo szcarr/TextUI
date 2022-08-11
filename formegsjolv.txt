@@ -1,4 +1,13 @@
-Når ein skal implementere nye userconfigs
+Fikse i standby når dato er i fortid:
 
-STANDBY
-    * LEGGE TIL API SPAM FILTER SANN AT STANDBY IKKJE SPAMMA APIEN OG AT EG IKKJE BLIR BANNA
+Traceback (most recent call last):
+  File "D:\Documents\Viktig\Programmering\TextUI\src\programfiles\TextUI.py", line 69, in check_modes
+    standby.main()
+  File "D:\Documents\Viktig\Programmering\TextUI\src\programfiles\standby.py", line 18, in main
+    do_countdown()
+  File "D:\Documents\Viktig\Programmering\TextUI\src\programfiles\standby.py", line 46, in do_countdown
+    countdown_list = countdown.initialize_countdowns()
+  File "D:\Documents\Viktig\Programmering\TextUI\src\programfiles\time_related\countdown\countdown.py", line 179, in initialize_countdowns
+    funny = toString(name, countdown(countdown_date, dateandtime))
+  File "D:\Documents\Viktig\Programmering\TextUI\src\programfiles\time_related\countdown\countdown.py", line 114, in toString
+    timelist = lst[1].split(":")

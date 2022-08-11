@@ -6,11 +6,11 @@ import datetime
 sys.path.insert(1, os.path.join(sys.path[0], '..')) # <- Adds parent folders modules to PATH
 
 import fileHandling as fh
-import config
-import debug
+
 import myvariables as mv
 import time_related.timeHandling as th
 import programfiles.csystem.prev_logins as prev
+import programfiles.crypto.cryptoprices as crypto
 import stringFormatting as sf
 
 #print(mv.split_by, mv.project_folder_location)
@@ -66,15 +66,6 @@ def write_login_data():
     for e in toAdd:
         fh.addTextToSpecifiedFile(statefile, e + "\n")
 
-def get_login_data():
-    pass
-    #output = fh.readTXTFile(statefile)
-
-
-
-    #tup = (user, )
-
-
 def is_login_message_enabled() -> bool:
     try:
         output = fh.readTXTFile(mv.userconfig_location)
@@ -93,6 +84,3 @@ def is_login_message_enabled() -> bool:
         if current_variable_selected == "loginMessage = True" and current_branch_selected.split("\n")[0] == "[MISC]":
             return True
     return False
-
-
-#print_login_message()

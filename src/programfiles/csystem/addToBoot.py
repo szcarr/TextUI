@@ -5,7 +5,7 @@ import sys
 sys.path.insert(1, os.path.join(sys.path[0], '..')) # <- Adds parent folders modules to PATH
 
 import fileHandling as fh
-import config
+import setup
 import debug
 import myvariables as mv
 
@@ -20,7 +20,7 @@ def add_to_boot():
         if fh.checkIfFileExist(windows_primary_startup_location): # <- Default path for startup
             debug.conditionalPrint(debug.systemPrint, "Found default directory for startup:")
             debug.conditionalPrint(debug.systemPrint, windows_primary_startup_location)
-            windows_textui_start = config.mv.project_folder_location + mv.windows_start_script
+            windows_textui_start = setup.mv.project_folder_location + mv.windows_start_script
             #print(windows_textui_start, windows_primary_startup_location)
             os.system('copy ' + windows_textui_start + ' "' + windows_primary_startup_location + '"')
 
